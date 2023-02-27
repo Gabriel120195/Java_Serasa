@@ -16,7 +16,7 @@ public class Ex05 {
         somaValores = somaValores + valor;
         i = i+1;
 
-        } while (i <= 15);
+        } while (i <= 10);
 
         System.out.println("Soma dos valores = " + somaValores);
     }
