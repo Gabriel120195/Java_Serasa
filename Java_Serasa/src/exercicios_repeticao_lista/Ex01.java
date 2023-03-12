@@ -7,5 +7,10 @@ public class Ex01 {
         for (int i = 1; i <= 20; i++) {
             System.out.println(i + "-" + frase);
         }
+
+        //Exemplo do professor
+        for (int i = 1; i <= 20 ; i++) {
+            System.out.println(i + " = Eu gosto de estudar Java!");
+        }
     }
 }

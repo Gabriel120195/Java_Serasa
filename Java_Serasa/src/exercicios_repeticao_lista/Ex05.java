@@ -1,22 +1,27 @@
 package exercicios_repeticao_lista;
 
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class Ex05 {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
 
         int somaValores = 0;
         int i = 1;
-        do {
-            
-        System.out.println("Digite o " + i + "ª número");
-        int valor = scan.nextInt();
 
-        somaValores = somaValores + valor;
-        i = i+1;
+        try {
 
-        } while (i <= 10);
+            do {
+
+            int valor = Integer.parseInt(JOptionPane.showInputDialog(null,"Digite o " + i + "ª número"));
+    
+            somaValores = somaValores + valor;
+            i = i+1;
+    
+            } while (i <= 10);
+        } 
+        catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,"Você digitou um valor Inválido!  Digite números por favor!");
+        }
 
         System.out.println("Soma dos valores = " + somaValores);
     }
