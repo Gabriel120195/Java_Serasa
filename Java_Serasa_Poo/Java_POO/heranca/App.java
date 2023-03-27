@@ -25,5 +25,6 @@ public class App {
 		System.out.println("Bonificação Diretor    R$ " + diretor.getBonificacao());
 		System.out.println("Bonificação Secretario R$ " + secretario.getBonificacao());
 		System.out.println("Bonificação Engenheiro R$ " + engenheiro.getBonificacao());
+		
 	}
 }
