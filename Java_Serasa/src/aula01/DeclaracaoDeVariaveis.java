@@ -2,6 +2,7 @@ package aula01;
 
 public class DeclaracaoDeVariaveis {
     public static void main(String[] args) {
+        String nome = "Gabriel";
         char sexo = 'm';
         byte idade = 28;
         short codigo = 254;
@@ -10,6 +11,8 @@ public class DeclaracaoDeVariaveis {
         long habitantes = 950554215;
         double dolar = 2.50;
         boolean alternativa = true;
+
+        System.out.println(nome);
 
         System.out.println("Sexo: " + sexo + " Idade: " + idade + " Codigo: " + codigo);
         System.out.println("Nota: " + nota + " Alunos: " + alunos + " Classes: " + classes);
