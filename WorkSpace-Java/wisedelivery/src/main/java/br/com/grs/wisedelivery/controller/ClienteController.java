@@ -1,15 +1,21 @@
 package br.com.grs.wisedelivery.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.grs.wisedelivery.dominio.Cliente;
+import br.com.grs.wisedelivery.controller.validator.Validator;
+import br.com.grs.wisedelivery.dominio.dto.ClienteDTO;
+import br.com.grs.wisedelivery.dominio.dto.ClienteLoginDTO;
+import br.com.grs.wisedelivery.exception.SenhaInvalidaException;
+import br.com.grs.wisedelivery.service.ClienteService;
+import jakarta.validation.Valid;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -17,21 +23,43 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("clientes")
 public class ClienteController {
 
-    //Outro tipo de logger
-    Logger logg = LoggerFactory.getLogger(ClienteController.class);
-    
+    @Autowired
+    @Getter private ClienteService clienteService;
+
+    @Autowired
+    @Getter private Validator<ClienteDTO> validator;
+
+        
     @GetMapping("form-cadastro")
     public String formCadastroCliente( Model model ){
-        model.addAttribute("cliente", new Cliente());
+        model.addAttribute("cliente", new ClienteDTO());
         return "cliente-cadastro";
     }
 
 
     @PostMapping("/save")
-    public String salvarCliente(@ModelAttribute("cliente") Cliente cliente ){
-        log.info("Bateu no /save");
-        logg.info("cliente salvo = " + cliente.getNome());
-        log.info("Logg = Bateu no /save");
-        return "cliente-cadastro";
+    public String salvarCliente(@ModelAttribute("cliente") @Valid ClienteDTO cliente, BindingResult result ){
+
+        if (validator.validator(cliente)) {
+            log.error("Senha e Confirmação não estão batendo!",cliente);
+            throw new SenhaInvalidaException("Senha e Confirmação não estão batendo!");
+        }
+        getClienteService().salvar(cliente);
+        log.info(String.format("Cliente Salvo! Nome: [%s]", cliente.getNome()));
+        return "cliente-cadastro-ok";
+    }
+
+    @GetMapping("/login")
+    public String telaLogin(Model model){
+        model.addAttribute("cliente", new ClienteLoginDTO());
+        return "login";
+    }
+
+    @PostMapping("/logar")
+    public String login(@ModelAttribute("cliente")ClienteLoginDTO cliente){
+       if (!getClienteService().login(cliente)) {
+            return "login";
+       }
+       return "cliente-home";
     }
 }
