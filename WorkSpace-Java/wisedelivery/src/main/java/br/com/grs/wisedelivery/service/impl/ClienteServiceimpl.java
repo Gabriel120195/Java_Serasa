@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.grs.wisedelivery.dominio.Cliente;
-import br.com.grs.wisedelivery.dominio.dto.ClienteDTO;
-import br.com.grs.wisedelivery.dominio.dto.ClienteLoginDTO;
-import br.com.grs.wisedelivery.dominio.dto.ClienteSalvoDTO;
+import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteDTO;
+import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteLoginDTO;
+import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteSalvoDTO;
 import br.com.grs.wisedelivery.exception.ObjetoNaoEncontradoException;
 import br.com.grs.wisedelivery.repository.ClienteRepository;
 import br.com.grs.wisedelivery.service.ClienteService;

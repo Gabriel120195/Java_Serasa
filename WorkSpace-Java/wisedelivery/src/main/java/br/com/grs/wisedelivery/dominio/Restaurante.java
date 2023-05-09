@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @Entity
 @Table(name = "restaurante")
 public class Restaurante extends Usuario {
@@ -31,6 +31,7 @@ public class Restaurante extends Usuario {
     @Getter @Setter
     private Integer tempoEntrega;
     
+    @Getter @Setter
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "restaurante_relacao_categorias",

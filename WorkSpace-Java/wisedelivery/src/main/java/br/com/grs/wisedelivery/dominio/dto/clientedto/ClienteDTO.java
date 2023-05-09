@@ -1,4 +1,4 @@
-package br.com.grs.wisedelivery.dominio.dto;
+package br.com.grs.wisedelivery.dominio.dto.clientedto;
 
 
 import jakarta.validation.constraints.Email;

@@ -3,7 +3,7 @@ package br.com.grs.wisedelivery.controller.validator.impl;
 import org.springframework.stereotype.Component;
 
 import br.com.grs.wisedelivery.controller.validator.Validator;
-import br.com.grs.wisedelivery.dominio.dto.ClienteDTO;
+import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteDTO;
 
 @Component
 public class ConfirmaSenhaValidatorImpl implements Validator<ClienteDTO> {

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.grs.wisedelivery.controller.validator.Validator;
-import br.com.grs.wisedelivery.dominio.dto.ClienteDTO;
-import br.com.grs.wisedelivery.dominio.dto.ClienteLoginDTO;
+import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteDTO;
+import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteLoginDTO;
 import br.com.grs.wisedelivery.exception.SenhaInvalidaException;
 import br.com.grs.wisedelivery.service.ClienteService;
 import jakarta.validation.Valid;

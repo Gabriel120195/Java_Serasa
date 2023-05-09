@@ -1,8 +1,8 @@
 package br.com.grs.wisedelivery.service;
 
-import br.com.grs.wisedelivery.dominio.dto.ClienteDTO;
-import br.com.grs.wisedelivery.dominio.dto.ClienteLoginDTO;
-import br.com.grs.wisedelivery.dominio.dto.ClienteSalvoDTO;
+import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteDTO;
+import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteLoginDTO;
+import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteSalvoDTO;
 
 
 
