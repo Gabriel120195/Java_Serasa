@@ -9,6 +9,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -39,4 +40,7 @@ public class Restaurante extends Usuario {
         inverseJoinColumns = @JoinColumn(name = "categoria_restaurante_id")
     )
     private Set<RestauranteCategoria> categorias = new HashSet<>();
+
+    @OneToMany(mappedBy = "restaurante")
+    private Set<ItemCardapio> cardapio = new HashSet<>();
 }

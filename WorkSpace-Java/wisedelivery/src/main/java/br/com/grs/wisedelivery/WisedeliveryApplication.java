@@ -9,12 +9,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.grs.wisedelivery.dominio.RestauranteCategoria;
 import br.com.grs.wisedelivery.repository.RestauranteCategoriaRepository;
+import br.com.grs.wisedelivery.utils.ServiceUtils;
+
 
 @SpringBootApplication
 public class WisedeliveryApplication implements CommandLineRunner {
 
 	@Autowired
 	private RestauranteCategoriaRepository restauranteCategoriaRepository;
+
+	@Autowired
+	private ServiceUtils utils;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WisedeliveryApplication.class, args);
@@ -33,6 +38,8 @@ public class WisedeliveryApplication implements CommandLineRunner {
 
 
 		restauranteCategoriaRepository.saveAll(List.of(cat1, cat2, cat3, cat4));
-	}
 
+		utils.consultaCep("09781220");
+
+	}
 }

@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta lang="pt-br">
-
-    <link rel="stylesheet" href="css/estilos.css">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>BlueFood</title>
+<head th:replace="~{fragmentos :: head}">
+    <style>
+        .text-danger{
+            color: brown;
+        }
+    </style>
 </head>
 
 <body id="fundo">
@@ -23,66 +17,73 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title">Insira seus dados</h5>
-                <form th:action="@{salvar}" th:object="${restaurante}" method="post">
+                <form action="">
+                    <div class="form-group">
+                        <label for="CEP">Cep</label>
+                        <input type="text" class="form-control" id="cep" placeholder="Cep..." />
+                    </div>
+                </form>
+                <form th:action="@{salvar}" th:object="${restaurante}" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="nome">Nome do Restaurante</label>
                         <input type="text" class="form-control" id="nome" placeholder="Nome..." th:field="*{nome}" />
                     </div>
+                    <div class="text-danger" th:errors="*{nome}"></div>
                     <div class="form-group">
                         <label for="CPF">CNPJ</label>
                         <input type="text" class="form-control" id="cpf" placeholder="CNPJ..." th:field="*{cnpj}" />
                     </div>
+                    <div class="text-danger" th:errors="*{cnpj}"></div>
                     <div class="form-group">
                         <label for="email">E-mail</label>
                         <input type="email" class="form-control" id="email" placeholder="E-mail..."
                             th:field="*{email}" />
                     </div>
+                    <div class="text-danger" th:errors="*{email}"></div>
                     <div class="form-group">
                         <label for="telefone">Telefone</label>
                         <input type="text" class="form-control" id="telefone" placeholder="Telefone..."
                             th:field="*{telefone}" />
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="CEP">Cep</label>
-                        <input type="text" class="form-control" id="cep" placeholder="Cep..." />
-                    </div> -->
-                    <label class="sr-only" for="inlineFormInputGroup">Taxa de Entrega</label>
+
+                    <span>Taxa de Entrega</span>
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="input-group-text">R$</div>
                         </div>
                         <input type="text" class="form-control" id="taxaEntrega" placeholder="0,00"th:field="*{taxaEntrega}">
                     </div>
+                    <div class="text-danger" th:errors="*{taxaEntrega}"></div>
                     <div class="form-group">
                         <label for="telefone">Tempo de Entrega Médio (Minutos)</label>
                         <input type="text" class="form-control" id="tempoEntrega" placeholder="Tempo de Entrega..."th:field="*{tempoEntrega}"/>
                     </div>
-
+                    <div class="text-danger" th:errors="*{taxaEntrega}"></div>
                     <div class="form-group">
                         <label for="categoria">Selecione uma ou mais categorias para o seu restaurante</label>
                         <select class="custom-select custom-select-lg mb-3" multiple size="4" th:field="*{categorias}">
                             <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nome}"></option>
-
                         </select>
                     </div>
-
-                    <!-- <div class="form-group">
+                    <span>Logotipo</span>
+                    <div class="form-group">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="customFile">
-                            <label class="custom-file-label" for="customFile">Choose file</label>
+                            <input type="file" class="custom-file-input" id="customFile" th:field="*{arquivoLogotipo}" accept="image/*">
+                            <label class="custom-file-label" for="customFile">Selecione uma Imagem</label>
                           </div>
-                    </div> -->
-
+                    </div>
                     <div class="form-group">
                         <label for="senha">Senha</label>
                         <input type="password" class="form-control" id="senha" placeholder="Senha..."
                             th:field="*{senha}" />
                     </div>
+                    <div class="text-danger" th:errors="*{senha}"></div>
                     <div class="form-group">
                         <label for="confirmaSenha">Confirme sua Senha</label>
                         <input type="password" class="form-control" id="confirmaSenha"
                             placeholder="Confirme sua Senha..." th:field="*{confirmaSenha}" />
                     </div>
+                    <div class="text-danger" th:errors="*{confirmaSenha}"></div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary btn-lg btn-block" value="Cadastrar" />
                     </div>
@@ -92,8 +93,6 @@
             </form>
         </div>
     </div>
-    </div>
-
 </body>
 
 </html>
