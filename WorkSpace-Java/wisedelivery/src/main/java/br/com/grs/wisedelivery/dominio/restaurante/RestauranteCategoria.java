@@ -1,4 +1,4 @@
-package br.com.grs.wisedelivery.dominio;
+package br.com.grs.wisedelivery.dominio.restaurante;
 
 import java.util.HashSet;
 import java.util.Set;

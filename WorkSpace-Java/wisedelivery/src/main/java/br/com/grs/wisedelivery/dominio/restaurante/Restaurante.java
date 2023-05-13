@@ -1,9 +1,10 @@
-package br.com.grs.wisedelivery.dominio;
+package br.com.grs.wisedelivery.dominio.restaurante;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import br.com.grs.wisedelivery.dominio.Usuario;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;

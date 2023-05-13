@@ -2,7 +2,7 @@ package br.com.grs.wisedelivery.dominio.dto.restaurantedto;
 
 import java.util.Set;
 
-import br.com.grs.wisedelivery.dominio.RestauranteCategoria;
+import br.com.grs.wisedelivery.dominio.restaurante.RestauranteCategoria;
 import lombok.Data;
 
 @Data
