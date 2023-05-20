@@ -1,4 +1,4 @@
-package aula01;
+
 
 public class DeclaracaoDeConstantes {
     public static void main(String[] args) {

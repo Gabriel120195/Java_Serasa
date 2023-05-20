@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.grs.wisedelivery.dominio.dto.restaurantedto.RestauranteDTO;
+import br.com.grs.wisedelivery.dominio.dto.restaurantedto.RestauranteIdDTO;
+import br.com.grs.wisedelivery.dominio.dto.restaurantedto.RestauranteLoginDTO;
 import br.com.grs.wisedelivery.dominio.dto.restaurantedto.RestauranteSalvoDTO;
 import br.com.grs.wisedelivery.dominio.restaurante.Restaurante;
 import br.com.grs.wisedelivery.dominio.restaurante.RestauranteCategoria;
+import br.com.grs.wisedelivery.exception.ObjetoNaoEncontradoException;
 import br.com.grs.wisedelivery.repository.RestauranteCategoriaRepository;
 import br.com.grs.wisedelivery.repository.RestauranteRepository;
 import br.com.grs.wisedelivery.service.RestauranteService;
@@ -52,5 +55,31 @@ public class RestauranteServiceimpl implements RestauranteService{
         RestauranteSalvoDTO dto = new RestauranteSalvoDTO();
         BeanUtils.copyProperties(restaurante, dto, "confirmaSenha");
         return dto;
-    } 
+    }
+
+    @Override
+    public boolean logar(RestauranteLoginDTO restaurante) {
+        Restaurante restauranteBanco = getRestauranteRepository().findByEmail(restaurante.getEmail()).orElseThrow(
+            () -> new ObjetoNaoEncontradoException("Não foi encontrado um restaurante para o e-mail passado"));
+            return restaurante.getEmail().equals(restauranteBanco.getEmail())
+            && restaurante.getSenha().equals(restauranteBanco.getSenha());
+            
+    }
+
+    @Override
+    public RestauranteSalvoDTO procurarPeloEmail(String email) {
+        return deRestauranteParaRestauranteSalvoDto(getRestauranteRepository().findByEmail(email).orElseThrow(
+        () -> new ObjetoNaoEncontradoException("Não foi encontrado um restaurante para o e-mail passado")));
+        
+        //deRestauranteParaRestauranteSalvoDto(restauranteBanco)
+    }
+
+    public RestauranteIdDTO procurarRestauranteIdPeloEmail(String email) {
+        RestauranteIdDTO dto = new RestauranteIdDTO();
+        Restaurante rest = getRestauranteRepository().findByEmail(email).orElseThrow(
+        () -> new ObjetoNaoEncontradoException("Não foi encontrado um restaurante para o e-mail passado"));
+
+        dto.setId(rest.getId());
+        return dto;
+    }
 }

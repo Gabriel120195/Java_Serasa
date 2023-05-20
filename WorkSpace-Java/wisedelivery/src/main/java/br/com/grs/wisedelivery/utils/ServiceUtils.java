@@ -1,5 +1,9 @@
 package br.com.grs.wisedelivery.utils;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,10 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class ServiceUtils {
 
+    public ServiceUtils() throws NoSuchAlgorithmException{}
+
+    Random random = SecureRandom.getInstanceStrong();
+
     @Getter @Setter
     @Value("${brasil.api.v2.cep.url}")
     private String apiUrl;
@@ -21,11 +29,16 @@ public class ServiceUtils {
     public void consultaCep(String cep){
         setApiUrl(apiUrl + cep);
         log.info("Api Url = " + getApiUrl());
-
         RestTemplate rt = new RestTemplate();
-
         ResponseEntity<EnderecoDTO> result = rt.getForEntity(getApiUrl(), EnderecoDTO.class);
-        
-        log.info("Resultado = " + result.getBody());
-    }   
+    }
+
+    public String getToken(){
+        StringBuilder token = new StringBuilder();
+        for (int i = 0; i < 150; i++) {
+            char c = (char) (this.random.nextInt(26) + 'a');
+            token.append(c);
+        }
+        return token.toString();
+    }
 }

@@ -88,7 +88,7 @@ public class WisedeliveryApplication implements CommandLineRunner {
 
 			Restaurante rest = new Restaurante();
 			rest.setNome("StarBucks");
-			rest.setEmail("starbucks@teste.com");
+			rest.setEmail("teste@teste.com");
 			rest.setCnpj("11122233312345");
 			rest.setTelefone("1140004000");
 			rest.setSenha("1234");

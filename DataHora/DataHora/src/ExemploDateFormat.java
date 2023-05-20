@@ -12,6 +12,8 @@ public class ExemploDateFormat {
         DateFormat exMedium = DateFormat.getDateInstance(DateFormat.MEDIUM);
         
         DateFormat exShort = DateFormat.getDateInstance(DateFormat.SHORT);
+
+        DateFormat exFull = DateFormat.getDateInstance(DateFormat.FULL);
         //para outro formato trocar o Medium para short
         
         //StringBuilder concatena as strings
@@ -22,11 +24,16 @@ public class ExemploDateFormat {
         sb2.append(exShort.format(data));
 
         //Tipo Medium
-        //sb2.append(exMedium.format(data));
+        sb2.append(exMedium.format(data));
 
         //Tipo long
-        //sb2.append(exLong.format(data));
+        sb2.append(exLong.format(data));
+
+        sb2.append(exFull.format(data));
+
 
         System.out.println(sb2.toString());
+
+        System.out.println(exFull.format(data));
     }
 }
