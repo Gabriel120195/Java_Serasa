@@ -11,7 +11,6 @@ import lombok.Data;
 public class ItemCardapioDTO {
     
     private Long id;
-
     private String nome;
     private String descricao;
     private String imagem;

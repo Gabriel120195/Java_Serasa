@@ -62,4 +62,9 @@ public class ClienteController {
        }
        return "cliente-home";
     }
+
+    @GetMapping("/home")
+    public String home(Model model){
+        return "cliente-home";
+    }
 }

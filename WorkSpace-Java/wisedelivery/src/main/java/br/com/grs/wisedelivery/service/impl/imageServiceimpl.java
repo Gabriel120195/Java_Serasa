@@ -33,7 +33,7 @@ public class imageServiceimpl {
                 log.error("Erro ao salvar imagem: " + e1.getMessage());
             }
         }
-        buildNomeArquivo.append(nomeArquivoECaminho.toString());
+        buildNomeArquivo.append(bytesDaImagem.getOriginalFilename());
         return buildNomeArquivo.toString();
     }
 }
