@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,8 +22,9 @@ public class ItemCardapioController {
     private ItemCardapioService itemCardapioService;
 
 
-    @GetMapping("form-itemcardapio")
-    public String formItemCardapio(Model model){
+    @GetMapping("form-itemcardapio/{restauranteId}")
+    public String formItemCardapio(Model model, @PathVariable("restauranteId") Long restauranteId){
+        model.addAttribute("itens", itemCardapioService.procurarTodosOsItensPeloIdDoRestaurante(restauranteId));
         model.addAttribute("categorias", itemCardapioService.pegarTodasAsCategorias());
         model.addAttribute("itemCardapio", new ItemCardapioDTO());
         return "restaurante-dashboard-itemcardapio";

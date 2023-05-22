@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.grs.wisedelivery.dominio.dto.restaurantedto.ItemCardapioDTO;
+import br.com.grs.wisedelivery.dominio.dto.restaurantedto.ItemCardapioTabelaDTO;
 import br.com.grs.wisedelivery.dominio.restaurante.CategoriaItem;
 import br.com.grs.wisedelivery.dominio.restaurante.ItemCardapio;
+import br.com.grs.wisedelivery.dominio.restaurante.Restaurante;
 import br.com.grs.wisedelivery.exception.ObjetoNaoEncontradoException;
 import br.com.grs.wisedelivery.repository.CategoriaItemRepository;
 import br.com.grs.wisedelivery.repository.ItemCardapioRepository;
+import br.com.grs.wisedelivery.repository.RestauranteRepository;
 import br.com.grs.wisedelivery.service.ItemCardapioService;
 import lombok.Getter;
 
@@ -23,6 +26,9 @@ public class ItemCardapioServiceimpl implements ItemCardapioService{
 
     @Autowired @Getter
     private CategoriaItemRepository categoriaItemRepository;
+
+    @Autowired @Getter
+    private RestauranteRepository restauranteRepository;
 
     @Override
     public ItemCardapioDTO salvar(ItemCardapioDTO dto) {
@@ -62,6 +68,23 @@ public class ItemCardapioServiceimpl implements ItemCardapioService{
         ItemCardapioDTO dto = new ItemCardapioDTO();
         BeanUtils.copyProperties(itemCardapio, dto);
         return dto;
+    }
+
+    private ItemCardapioTabelaDTO deItemCardapioParaItemCardapioTabelaDTO(ItemCardapio itemCardapio){
+        ItemCardapioTabelaDTO dto = new ItemCardapioTabelaDTO();
+        BeanUtils.copyProperties(itemCardapio, dto, "restaurante, categorias");
+        dto.setRestauranteId(itemCardapio.getRestaurante().getId());
+        dto.setCategorias(itemCardapio.getCategorias().stream().map(
+            categoria -> categoria.getNome()).toList());
+        
+        return dto;
+
+    }
+
+    @Override
+    public List<ItemCardapioTabelaDTO> procurarTodosOsItensPeloIdDoRestaurante(Long restauranteId) {
+        Restaurante restaurante = getRestauranteRepository().findById(restauranteId).orElseThrow(() -> new ObjetoNaoEncontradoException("Não foi encontrado para este Id"));
+        return getItemCardapioRepository().findByRestaurante(restaurante).stream().map(item -> deItemCardapioParaItemCardapioTabelaDTO(item)).toList();
     }
     
 }
