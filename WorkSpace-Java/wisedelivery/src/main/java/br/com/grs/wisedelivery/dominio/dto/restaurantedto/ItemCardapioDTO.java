@@ -16,6 +16,7 @@ public class ItemCardapioDTO {
     private String imagem;
     private BigDecimal preco;
     private boolean destaque;
+    private boolean ativo;
     private List<CategoriaItem> categorias;
     private Restaurante restaurante;
 }

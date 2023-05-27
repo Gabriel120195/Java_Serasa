@@ -84,7 +84,16 @@ public class ItemCardapioServiceimpl implements ItemCardapioService{
     @Override
     public List<ItemCardapioTabelaDTO> procurarTodosOsItensPeloIdDoRestaurante(Long restauranteId) {
         Restaurante restaurante = getRestauranteRepository().findById(restauranteId).orElseThrow(() -> new ObjetoNaoEncontradoException("Não foi encontrado para este Id"));
-        return getItemCardapioRepository().findByRestaurante(restaurante).stream().map(item -> deItemCardapioParaItemCardapioTabelaDTO(item)).toList();
+        return getItemCardapioRepository().findByRestauranteAndAtivoOrderByNome(restaurante, true).stream().map(this::deItemCardapioParaItemCardapioTabelaDTO).toList();
     }
-    
+
+    @Override
+    public List<ItemCardapioTabelaDTO> procurarTodosOsItensPeloIdDoRestauranteEQueEstejamEmDestaque(Long restauranteId) {
+        return getItemCardapioRepository()
+                            .findByRestauranteIdAndDestaqueAndAtivoOrderByNome(restauranteId, Boolean.TRUE,Boolean.TRUE)
+                            .stream()
+                            .map(this::deItemCardapioParaItemCardapioTabelaDTO)
+                            .toList();
+        
+    }
 }

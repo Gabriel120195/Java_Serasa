@@ -122,6 +122,7 @@ public class WisedeliveryApplication implements CommandLineRunner {
 			.descricao("Bolinhos de queijo super rechados")
 			.preco(BigDecimal.valueOf(25.00))
 			.destaque(Boolean.TRUE)
+			.ativo(Boolean.TRUE)
 			.restaurante(restaurante)
 			.categorias(categorias)
 			.build();
@@ -131,6 +132,7 @@ public class WisedeliveryApplication implements CommandLineRunner {
 			.descricao("Hot-Dog com duas salsichas")
 			.preco(BigDecimal.valueOf(10.00))
 			.destaque(Boolean.TRUE)
+			.ativo(Boolean.FALSE)
 			.restaurante(restaurante)
 			.categorias(categorias)
 			.build();
@@ -140,6 +142,7 @@ public class WisedeliveryApplication implements CommandLineRunner {
 			.descricao("Porção de pastel com vinagrete")
 			.preco(BigDecimal.valueOf(40.00))
 			.destaque(Boolean.FALSE)
+			.ativo(Boolean.FALSE)
 			.restaurante(restaurante)
 			.categorias(categorias)
 			.build();
@@ -149,6 +152,7 @@ public class WisedeliveryApplication implements CommandLineRunner {
 			.descricao("Lanche delicioso com bastante bacon")
 			.preco(BigDecimal.valueOf(15.00))
 			.destaque(Boolean.FALSE)
+			.ativo(Boolean.TRUE)
 			.restaurante(restaurante)
 			.categorias(categorias)
 			.build();

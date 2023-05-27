@@ -19,5 +19,7 @@ public interface RestauranteService {
     List<RestauranteCategoria> pegaTodasCategorias();
 
     boolean logar(RestauranteLoginDTO restaurante);
+
+    List<RestauranteDTO> procurarTodos();
     
 }

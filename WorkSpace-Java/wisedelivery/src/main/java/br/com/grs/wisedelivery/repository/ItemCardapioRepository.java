@@ -10,6 +10,9 @@ import br.com.grs.wisedelivery.dominio.restaurante.Restaurante;
 
 public interface ItemCardapioRepository extends JpaRepository<ItemCardapio,Long>{
 
-    List<ItemCardapio> findByRestaurante(Restaurante restaurante);
+    List<ItemCardapio> findByRestauranteAndAtivoOrderByNome(Restaurante restaurante, boolean ativo);
+
+    List<ItemCardapio> findByRestauranteIdAndDestaqueAndAtivoOrderByNome(Long restauranteId, boolean destaque, boolean ativo);
     
+
 }

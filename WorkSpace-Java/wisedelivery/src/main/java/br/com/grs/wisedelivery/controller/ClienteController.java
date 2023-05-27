@@ -1,19 +1,25 @@
 package br.com.grs.wisedelivery.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.grs.wisedelivery.controller.validator.Validator;
 import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteDTO;
 import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteLoginDTO;
+import br.com.grs.wisedelivery.dominio.dto.restaurantedto.ItemCardapioTabelaDTO;
 import br.com.grs.wisedelivery.exception.SenhaInvalidaException;
 import br.com.grs.wisedelivery.service.ClienteService;
+import br.com.grs.wisedelivery.service.ItemCardapioService;
+import br.com.grs.wisedelivery.service.RestauranteService;
 import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -23,8 +29,17 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("clientes")
 public class ClienteController {
 
+    public ClienteController(RestauranteService restauranteService){
+        this.restauranteService = restauranteService;
+    }
+
+    @Getter private final RestauranteService restauranteService;
+
     @Autowired
     @Getter private ClienteService clienteService;
+
+    @Autowired
+    @Getter private ItemCardapioService itemCardapioService;
 
     @Autowired
     @Getter private Validator<ClienteDTO> validator;
@@ -65,6 +80,20 @@ public class ClienteController {
 
     @GetMapping("/home")
     public String home(Model model){
+        model.addAttribute("restaurantes", getRestauranteService().procurarTodos());
         return "cliente-home";
+    }
+
+    @GetMapping("restaurantes/{restauranteId}")
+    public String clienteRestauranteCardapio(Model model, @PathVariable("restauranteId") Long restauranteId){
+        
+        List<ItemCardapioTabelaDTO> itensCardapioRestaurante = getItemCardapioService().procurarTodosOsItensPeloIdDoRestaurante(restauranteId);
+        //List<ItemCardapioTabelaDTO> itensEmDestaque = itensCardapioRestaurante.stream().filter(item -> item.isDestaque()).toList();
+        
+        List<ItemCardapioTabelaDTO> itensEmDestaque = getItemCardapioService().procurarTodosOsItensPeloIdDoRestauranteEQueEstejamEmDestaque(restauranteId);
+
+        model.addAttribute("itensEmDestaque", itensEmDestaque);
+        model.addAttribute("itensCardapioRestaurante", itensCardapioRestaurante);
+        return "cliente-restaurante-cardapio";
     }
 }
