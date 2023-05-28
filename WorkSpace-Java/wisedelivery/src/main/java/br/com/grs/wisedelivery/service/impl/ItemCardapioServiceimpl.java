@@ -67,6 +67,7 @@ public class ItemCardapioServiceimpl implements ItemCardapioService{
     private ItemCardapioDTO deItemCardapioParaItemCardapioDto(ItemCardapio itemCardapio){
         ItemCardapioDTO dto = new ItemCardapioDTO();
         BeanUtils.copyProperties(itemCardapio, dto);
+        dto.setRestaurante(itemCardapio.getRestaurante());
         return dto;
     }
 
@@ -94,6 +95,5 @@ public class ItemCardapioServiceimpl implements ItemCardapioService{
                             .stream()
                             .map(this::deItemCardapioParaItemCardapioTabelaDTO)
                             .toList();
-        
     }
 }

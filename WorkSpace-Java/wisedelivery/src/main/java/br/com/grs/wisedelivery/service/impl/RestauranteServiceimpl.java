@@ -105,4 +105,13 @@ public class RestauranteServiceimpl implements RestauranteService{
 
         return getRestauranteRepository().findAll().stream().map(this::deRestauranteParaRestauranteDto).toList();
     }
+
+    @Override
+    public RestauranteIdDTO procurarRestaurantePeloId(Long id){
+        Restaurante restaurante = getRestauranteRepository().findById(id).orElseThrow(() -> new ObjetoNaoEncontradoException("Não foi encontrado um restaurante para o e-mail passado"));
+        RestauranteIdDTO dto = new RestauranteIdDTO();
+        dto.setId(restaurante.getId());
+        dto.setNome(restaurante.getNome());
+        return dto;
+    }
 }

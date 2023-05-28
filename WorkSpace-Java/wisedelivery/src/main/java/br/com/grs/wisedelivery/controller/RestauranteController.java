@@ -55,5 +55,4 @@ public class RestauranteController {
     public String home(Model model){
         return "restaurante-dashboard";
     }
-    
 }

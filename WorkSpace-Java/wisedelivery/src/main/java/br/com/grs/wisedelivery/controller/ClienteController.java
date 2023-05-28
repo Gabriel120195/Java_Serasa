@@ -1,5 +1,6 @@
 package br.com.grs.wisedelivery.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.com.grs.wisedelivery.controller.validator.Validator;
 import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteDTO;
 import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteLoginDTO;
+import br.com.grs.wisedelivery.dominio.dto.restaurantedto.ItemCardapioDTO;
 import br.com.grs.wisedelivery.dominio.dto.restaurantedto.ItemCardapioTabelaDTO;
+import br.com.grs.wisedelivery.dominio.dto.restaurantedto.ItemCarrinhoDTO;
+import br.com.grs.wisedelivery.dominio.dto.restaurantedto.RestauranteIdDTO;
 import br.com.grs.wisedelivery.exception.SenhaInvalidaException;
 import br.com.grs.wisedelivery.service.ClienteService;
 import br.com.grs.wisedelivery.service.ItemCardapioService;
@@ -92,8 +96,31 @@ public class ClienteController {
         
         List<ItemCardapioTabelaDTO> itensEmDestaque = getItemCardapioService().procurarTodosOsItensPeloIdDoRestauranteEQueEstejamEmDestaque(restauranteId);
 
+        RestauranteIdDTO restaurante = getRestauranteService().procurarRestaurantePeloId(restauranteId);
+        model.addAttribute("restaurante", restaurante);
         model.addAttribute("itensEmDestaque", itensEmDestaque);
         model.addAttribute("itensCardapioRestaurante", itensCardapioRestaurante);
         return "cliente-restaurante-cardapio";
+    }
+
+    @GetMapping("restaurantes/{restauranteId}/itens/{itemId}")
+    public String clienteRestauranteCardapioItem(Model model, @PathVariable("itemId") Long itemId){
+        
+        model.addAttribute("item", getItemCardapioService().procurarPeloId(itemId));
+        model.addAttribute("itemCarrinho", new ItemCarrinhoDTO());
+        return "cliente-restaurante-itemcardapio";
+    }
+
+    @PostMapping("carrinho/add/{itemId}")
+    public String adicionaItemAoCarrinho(@ModelAttribute("itemCarrinho") ItemCarrinhoDTO itemCarrinhoDTO, @PathVariable("itemId") Long itemId, Model model){
+        ItemCardapioDTO itemCardapioDTO = getItemCardapioService().procurarPeloId(itemId);
+        itemCarrinhoDTO.setId(itemCardapioDTO.getId());
+        itemCarrinhoDTO.setNome(itemCardapioDTO.getNome());
+        itemCarrinhoDTO.setPreco(itemCardapioDTO.getPreco());
+        carrinhoService.addItem(itemCarrinhoDTO);
+        BigDecimal valorItem = itemCarrinhoDTO.getPreco().multiply(BigDecimal.valueOf(itemCarrinhoDTO.getQuantidade()));
+
+        model.addAttribute("item", getItemCardapioService().procurarPeloId(1L));
+        return "cliente-restaurante-itemcardapio";
     }
 }
