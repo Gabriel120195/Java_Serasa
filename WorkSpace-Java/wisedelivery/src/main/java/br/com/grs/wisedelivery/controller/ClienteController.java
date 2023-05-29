@@ -1,6 +1,5 @@
 package br.com.grs.wisedelivery.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.com.grs.wisedelivery.controller.validator.Validator;
 import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteDTO;
 import br.com.grs.wisedelivery.dominio.dto.clientedto.ClienteLoginDTO;
-import br.com.grs.wisedelivery.dominio.dto.restaurantedto.ItemCardapioDTO;
+import br.com.grs.wisedelivery.dominio.dto.restaurantedto.Carrinho;
 import br.com.grs.wisedelivery.dominio.dto.restaurantedto.ItemCardapioTabelaDTO;
 import br.com.grs.wisedelivery.dominio.dto.restaurantedto.ItemCarrinhoDTO;
 import br.com.grs.wisedelivery.dominio.dto.restaurantedto.RestauranteIdDTO;
+import br.com.grs.wisedelivery.exception.RestauranteDiferenteException;
 import br.com.grs.wisedelivery.exception.SenhaInvalidaException;
 import br.com.grs.wisedelivery.service.ClienteService;
 import br.com.grs.wisedelivery.service.ItemCardapioService;
@@ -33,11 +33,11 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("clientes")
 public class ClienteController {
 
-    public ClienteController(RestauranteService restauranteService){
-        this.restauranteService = restauranteService;
-    }
+    @Autowired
+    @Getter private Carrinho carrinho;
 
-    @Getter private final RestauranteService restauranteService;
+    @Autowired
+    @Getter private RestauranteService restauranteService;
 
     @Autowired
     @Getter private ClienteService clienteService;
@@ -113,14 +113,15 @@ public class ClienteController {
 
     @PostMapping("carrinho/add/{itemId}")
     public String adicionaItemAoCarrinho(@ModelAttribute("itemCarrinho") ItemCarrinhoDTO itemCarrinhoDTO, @PathVariable("itemId") Long itemId, Model model){
-        ItemCardapioDTO itemCardapioDTO = getItemCardapioService().procurarPeloId(itemId);
-        itemCarrinhoDTO.setId(itemCardapioDTO.getId());
-        itemCarrinhoDTO.setNome(itemCardapioDTO.getNome());
-        itemCarrinhoDTO.setPreco(itemCardapioDTO.getPreco());
-        carrinhoService.addItem(itemCarrinhoDTO);
-        BigDecimal valorItem = itemCarrinhoDTO.getPreco().multiply(BigDecimal.valueOf(itemCarrinhoDTO.getQuantidade()));
+        
+        try {
+            carrinho.adicionarItem(itemCarrinhoDTO, itemId);
+        } catch (RestauranteDiferenteException e) {
+            model.addAttribute("erro", true);
+            model.addAttribute("msgErroRestaurante", e.getMessage());
+        }
 
-        model.addAttribute("item", getItemCardapioService().procurarPeloId(1L));
-        return "cliente-restaurante-itemcardapio";
+        model.addAttribute("carrinho", carrinho);
+        return "cliente-carrinho";
     }
 }
