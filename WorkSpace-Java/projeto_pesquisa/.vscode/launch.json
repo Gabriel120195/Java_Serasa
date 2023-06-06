@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ProjetoPesquisaApplication<projeto_pesquisa>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "br.com.grs.projeto_pesquisa.ProjetoPesquisaApplication",
+            "projectName": "projeto_pesquisa",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

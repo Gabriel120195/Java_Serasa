@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head th:replace="~{fragmentos :: head('Pesquisas::Inerir Nova Pesquisa')}"></head>
+
+<body>
+    <header th:replace="~{fragmentos :: navbar}"></header>
+
+    <!-- Fim cabeçalho -->
+
+    <article>
+        <div class="container mt-3">
+            <div class="card">
+                <div class="card-header">Pesquisa sobre nosso cinema</div>
+                <div class="card-body">
+                    <form th:action="@{/pesquisas}" th:object="${pesquisa}" method="post" >
+                        <input type="hidden" th:field="*{id}">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-outline">
+                                    <input type="text" id="nome" class="form-control" th:field="*{nome}"
+                                        th:errorclass="is-invalid"/>
+                                    <label class="form-label" for="nome">Nome</label>
+                                </div>
+                                <div class="text-danger" th:errors="*{nome}"></div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-outline">
+                                    <input type="email" id="typeEmail" class="form-control" th:field="*{email}"
+                                        th:errorclass="is-invalid"/>
+                                    <label class="form-label" for="typeEmail">Email</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-3">
+                                <h6>Sexo</h6>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                    value="masculino" th:field="*{sexo}" th:checked="${pesquisa.sexo == 'masculino'}" />
+                                    <label class="form-check-label" for="inlineRadio1">Masculino</label>
+                                </div>
+        
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                    value="feminino" th:field="*{sexo}" th:checked="${pesquisa.sexo == 'feminino'}" />
+                                    <label class="form-check-label" for="inlineRadio2">Feminino</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <h6>Estado Civil</h6>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="estCivil" id="inlineRadio1"
+                                    th:value="${T(br.com.grs.projeto_pesquisa.model.enums.EstadoCivil).CASADO}" th:field="*{estadoCivil}"/>
+                                    <label class="form-check-label" for="inlineRadio1">Casado(a)</label>
+                                </div>
+        
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="estCivil" id="inlineRadio2"
+                                    th:value="${T(br.com.grs.projeto_pesquisa.model.enums.EstadoCivil).SOLTEIRO}" th:field="*{estadoCivil}"/>
+                                    <label class="form-check-label" for="inlineRadio2">Solteiro(a)</label>
+                                </div>
+        
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="estCivil" id="inlineRadio3"
+                                    th:value="${T(br.com.grs.projeto_pesquisa.model.enums.EstadoCivil).VIUVO}" th:field="*{estadoCivil}"/>
+                                    <label class="form-check-label" for="inlineRadio3">Viúvo(a)</label>
+                                </div>
+        
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="estCivil" id="inlineRadio4"
+                                    th:value="${T(br.com.grs.projeto_pesquisa.model.enums.EstadoCivil).DIVORCIADO}" th:field="*{estadoCivil}"/>
+                                    <label class="form-check-label" for="inlineRadio4">Divorciado(a)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <!-- Default checkbox -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" th:value="${T(br.com.grs.projeto_pesquisa.model.enums.GeneroFilme).FICCAO}" th:field="*{generosFilme}" id="flexCheckDefault" />
+                                    <label class="form-check-label" for="flexCheckDefault">Ficção</label>
+                                </div>
+        
+                                <!-- Checked checkbox -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" th:value="${T(br.com.grs.projeto_pesquisa.model.enums.GeneroFilme).ACAO}" th:field="*{generosFilme}" id="flexCheckChecked" />
+                                    <label class="form-check-label" for="flexCheckChecked">Ação</label>
+                                </div>
+        
+                                <!-- Checked checkbox -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" th:value="${T(br.com.grs.projeto_pesquisa.model.enums.GeneroFilme).TERROR}" th:field="*{generosFilme}" id="flexCheckChecked" />
+                                    <label class="form-check-label" for="flexCheckChecked">Terror</label>
+                                </div>
+        
+                                <!-- Checked checkbox -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" th:value="${T(br.com.grs.projeto_pesquisa.model.enums.GeneroFilme).ROMANCE}" th:field="*{generosFilme}" id="flexCheckChecked" />
+                                    <label class="form-check-label" for="flexCheckChecked">Romance</label>
+                                </div>
+        
+                                <!-- Checked checkbox -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" th:value="${T(br.com.grs.projeto_pesquisa.model.enums.GeneroFilme).COMEDIA}" th:field="*{generosFilme}" id="flexCheckChecked" />
+                                    <label class="form-check-label" for="flexCheckChecked">Comédia</label>
+                                </div>
+        
+                                <!-- Checked checkbox -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" th:value="${T(br.com.grs.projeto_pesquisa.model.enums.GeneroFilme).ANIMACAO}" th:field="*{generosFilme}" id="flexCheckChecked" />
+                                    <label class="form-check-label" for="flexCheckChecked">Animação</label>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                        <a href="/pesquisas"  class="btn btn-warning">Voltar</a>
+                    </form>
+                </div>
+              </div>
+        </div>
+    </article>
+
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+</body>
+
+</html>
